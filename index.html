@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>新辦公室搬遷費用評估表</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #fdfbf7;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+            font-size: 15px;
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+        .instruction-banner {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            padding: 14px 20px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+        .print-btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .print-btn:hover {
+            background-color: #2563eb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #d9d9d9;
+            padding: 10px 12px;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .red-text {
+            color: #dc2626;
+        }
+        .editable-num {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            background: #fefce8;
+            padding: 6px 8px;
+            text-align: right;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        .editable-num:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #fff;
+        }
+        .subtotal-row {
+            background-color: #fafafa;
+            font-weight: bold;
+        }
+        .grand-total-row {
+            background-color: #f1f5f9;
+            font-weight: bold;
+        }
+        .note-section {
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        .summary-box {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .summary-left {
+            flex: 1;
+            background: #ffffff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 14px;
+        }
+        .summary-right {
+            flex: 2;
+            background: #ffffff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 14px;
+        }
+        .summary-right table {
+            margin-bottom: 0;
+            box-shadow: none;
+            font-size: 14px;
+        }
+        .analysis-section {
+            background: #ffffff;
+            border: 1px solid #d9d9d9;
+            padding: 22px;
+            border-radius: 6px;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+        .analysis-section h3 {
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 18px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .analysis-list {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: decimal;
+        }
+        .analysis-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+        .highlight-notice {
+            margin-top: 18px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #eff6ff;
+            padding: 16px;
+            border-radius: 6px;
+            border-left: 5px solid #2563eb;
+            border-top: 1px solid #bfdbfe;
+            border-right: 1px solid #bfdbfe;
+            border-bottom: 1px solid #bfdbfe;
+        }
+        @media print {
+            .print-btn, .instruction-banner {
+                display: none;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<h2>新辦公室搬遷費用評估表</h2>
+<div class="instruction-banner">
+    <span>💡 提示：114年金額已固定，115年過渡期增額與116年新辦公室金額可直接修改調整，系統會自動重新計算預估費用、差異與總計！</span>
+    <button class="print-btn" onclick="window.print()">🖨️ 列印 / 存為 PDF</button>
+</div>
+
+<form id="costForm">
+<table>
+    <thead>
+        <tr>
+            <th>大項</th>
+            <th>費用項目類別</th>
+            <th>114年 (a)<br>年度費用</th>
+            <th>115年 11-12月 (b)<br>(搬遷過渡期增額)</th>
+            <th>115年預估費用 (c)<br>=(a)+(b)</th>
+            <th>116年 新辦公室 (d)<br>(未來整年預估)</th>
+            <th>115年-116年<br>差異</th>
+            <th>說明</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody">
+        <!-- 數據列將透過 JavaScript 動態生成 -->
+    </tbody>
+</table>
+</form>
+
+<div class="note-section">
+    <div class="bold red-text">★上面不含下述成本-(與員工有關，我先拉掉)</div>
+    <div style="color: #595959; margin-top: 5px;">薪資、業績獎金、保險、退休金、年終、職工福利、交際費、員工訓練費、稅捐提撥、旅遊金提撥</div>
+</div>
+
+<div class="summary-box">
+    <div class="summary-left" style="text-align: center;">
+        <div class="bold" style="background: #F2F2F2; padding: 10px; border: 1px solid #d9d9d9; font-size: 15px;">搬遷所衍生費用 (A+B+C項小計)</div>
+        <div id="sumA+sumB+sumC_display" class="bold red-text" style="font-size: 24px; padding: 18px; border: 1px solid #d9d9d9; border-top: none; background: #fff;">1,568,000</div>
+    </div>
+    <div class="summary-right">
+        <table>
+            <tr>
+                <td>第一年 (d)-(a)</td>
+                <td id="diff_yr1" class="text-right bold red-text">(1,823,602)</td>
+                <td style="color: #555; font-size: 13px; border-left: none;">需加回舊辦公室裝修加速提列</td>
+            </tr>
+            <tr>
+                <td>第二年 (d)-(a)</td>
+                <td id="diff_yr2" class="text-right bold red-text">(1,823,602)</td>
+                <td style="color: #555; font-size: 13px; border-left: none;">明年無裝潢費</td>
+            </tr>
+            <tr>
+                <td>第三年 (d)-(a)</td>
+                <td id="diff_yr3" class="text-right bold red-text">(1,823,602)</td>
+                <td style="color: #555; font-size: 13px; border-left: none;"></td>
+            </tr>
+            <tr>
+                <td>第四年 (d)-(a)</td>
+                <td id="diff_yr4" class="text-right bold red-text">(1,823,602)</td>
+                <td style="color: #555; font-size: 13px; border-left: none;">加回 $2,283,564 * 5</td>
+            </tr>
+            <tr>
+                <td>第五年 (d)-(a)</td>
+                <td id="diff_yr5" class="text-right bold red-text">(1,823,602)</td>
+                <td style="color: #555; font-size: 13px; border-left: none;"></td>
+            </tr>
+            <tr style="border-top: 2px solid #000;">
+                <td class="bold">合計五年金額</td>
+                <td id="diff_total" class="text-right bold red-text" style="font-size: 15px;">(9,118,010)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="bold">加回：各項攤銷-裝潢 ($2,283,564*5)</td>
+                <td id="add_back_amort" class="text-right bold" style="font-size: 15px;">11,417,820</td>
+                <td style="color: #555; font-size: 13px; border-left: none;"></td>
+            </tr>
+            <tr style="border-top: 2px solid #000; border-bottom: 3px double #000;">
+                <td class="bold" style="font-size: 16px;">最終合計五年金額</td>
+                <td id="final_total" class="text-right bold" style="font-size: 17px;">2,299,810</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="bold" style="color: #1d4ed8; font-size: 16px;">每年增加費用 (除以5)</td>
+                <td id="per_year_added" class="text-right bold" style="color: #1d4ed8; font-size: 17px;">459,962</td>
+                <td style="color: #555; font-size: 13px; border-left: none;"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="analysis-section">
+    <h3>為何搬遷後，費用可能沒有減少反而增加原因如下：</h3>
+    
+    <ol class="analysis-list">
+        <li class="analysis-item">
+            <span>1. 遠傳移機費用增加 <span style="font-size: 13px; color: #666; font-weight: normal;">(金額待確認)</span></span>
+            <span class="bold red-text">1,560,000</span>
+        </li>
+        <li class="analysis-item">
+            <span>2. 新辦公室裝潢</span>
+            <span class="bold red-text">1,000,000</span>
+        </li>
+        <li class="analysis-item">
+            <span>3. 第二辦公室租用</span>
+            <span class="bold red-text">636,000</span>
+        </li>
+        <li class="analysis-item">
+            <span>4. 其他所有費用預估</span>
+            <span class="bold red-text">303,773</span>
+        </li>
+        <li class="analysis-item">
+            <span>5. 搬遷後省下 (租金、水電、管理、打掃)</span>
+            <span class="bold" style="color: #16a34a;">(3,039,811)</span>
+        </li>
+    </ol>
+
+    <div style="border-top: 1px solid #cbd5e1; margin-top: 14px; padding-top: 12px; display: flex; justify-content: space-between; font-weight: bold; font-size: 16px;">
+        <span>合計每年增加</span>
+        <span class="red-text" style="font-size: 18px;">459,962</span>
+    </div>
+
+    <!-- 家福企頻說明區塊 -->
+    <div class="highlight-notice">
+        <span class="bold" style="color: #1e3a8a; font-size: 17px;">🏠家福企頻移機預估費用過高說明：</span><br>
+        因家福企頻目前設定在中華電信，若離開東興路機房，所有門市機上盒都需重設，除非放置機房地點在同一區域，那就有可能不用重新設定。因為企頻部份已走內網，故遠傳只要20M就足夠目前每月1.5萬，但家福門市多又走外網，為了穩定音源，移機置放的規格同中華電信即100M，但遠傳流量每一個級距收費不同，目前先依網路上資料做預估，待與諮詢廠商確認金額才能計算。
+    </div>
+
+    <div style="text-align: right; margin-top: 18px; font-size: 13px; color: #64748b;">2026/7/31 鈺今 編製</div>
+</div>
+
+<script>
+    const dataRows = [
+        { cat: "一、固定常態成本", name: "辦公室租金", a: 3960000, b: 252000, d: 1512000, note: "新辦公室 $12.6萬/月" },
+        { cat: "一、固定常態成本", name: "辦公室停車費", a: 171432, b: 0, d: 0, note: "" },
+        { cat: "一、固定常態成本", name: "水電費", a: 420379, b: 40000, d: 240000, note: "" },
+        { cat: "一、固定常態成本", name: "辦公室什支-打掃", a: 120000, b: 10000, d: 60000, note: "新辦公室抓 $5000/月" },
+        { cat: "一、固定常態成本", name: "辦公室什支-管理費", a: 300000, b: 20000, d: 120000, note: "新辦公室抓 $200/坪<br>奧斐.采藝 $3.6萬*2<br>成傑 $2.5萬；亞彼 $2.4萬" },
+        { cat: "一、固定常態成本", name: "租金費用-其他倉庫", a: 214979, b: 0, d: 257979, note: "倉庫 $3.8萬；原人資 $1819*12，115改 $6.5萬/年 ↑$4.3萬" },
+        { cat: "一、固定常態成本", name: "文具用品", a: 65796, b: 0, d: 60000, note: "" },
+        { cat: "一、固定常態成本", name: "運費", a: 60521, b: 0, d: 60000, note: "" },
+        { cat: "一、固定常態成本", name: "電話費-公司", a: 144000, b: 0, d: 144000, note: "公司網路1G*2條+電話，主線+備線，超載會自動抓另一條" },
+        { cat: "一、固定常態成本", name: "行動電話", a: 27644, b: 0, d: 30000, note: "" },
+        { cat: "一、固定常態成本", name: "郵電費-其他", a: 27947, b: 0, d: 30000, note: "匯費.郵資" },
+        { cat: "一、固定常態成本", name: "修繕費", a: 132881, b: 0, d: 144000, note: "" },
+        { cat: "一、固定常態成本", name: "廣告費", a: 38177, b: 0, d: 42000, note: "104廣告" },
+        { cat: "一、固定常態成本", name: "各項攤銷-裝潢", a: 2283564, b: 0, d: 1000000, note: "新辦公室抓 $500萬攤5年<br>116年舊辦公已加速提列，故未來五年沒有裝修成本" },
+        { cat: "一、固定常態成本", name: "勞務費", a: 196964, b: 0, d: 480000, note: "簽證費 $16萬/年<br>115年至6月含WELL稿費 $12萬+天佑 $20萬<br>故116年抓 $4萬/月" },
+        { cat: "一、固定常態成本", name: "什費", a: 952097, b: 0, d: 960000, note: "" },
+        
+        { cat: "二、搬遷一次性成本", name: "原址合約違約 / 罰款", a: 0, b: 660000, d: 0, note: "" },
+        { cat: "二、搬遷一次性成本", name: "搬遷運費 $5000*6車", a: 0, b: 30000, d: 0, note: "" },
+        { cat: "二、搬遷一次性成本", name: "公司網路移機設定費", a: 0, b: 20000, d: 0, note: "" },
+        { cat: "二、搬遷一次性成本", name: "OA拆裝費20組 $1000/組", a: 0, b: 20000, d: 0, note: "" },
+        { cat: "二、搬遷一次性成本", name: "新購置OA辦公桌", a: 0, b: 100000, d: 0, note: "" },
+        { cat: "二、搬遷一次性成本", name: "新購置文件櫃、桌", a: 0, b: 50000, d: 0, note: "" },
+
+        { cat: "三、機房與庫房成本", name: "伺服器遠傳-全家", a: 333480, b: 0, d: 333480, note: "租金+電費" },
+        { cat: "三、機房與庫房成本", name: "遠傳網路-全家", a: 180000, b: 0, d: 180000, note: "網路20M" },
+        { cat: "三、機房與庫房成本", name: "伺服器遠傳-家福", a: 0, b: 80000, d: 480000, note: "租金+電費；家福需100M故金額高於全家" },
+        { cat: "三、機房與庫房成本", name: "網路家-家福", a: 43200, b: 180000, d: 1080000, note: "但目前昇還還在詢問其他廠商，故我先用遠傳做預估" },
+        { cat: "三、機房與庫房成本", name: "庫房網路", a: 0, b: 10000, d: 60000, note: "" },
+        { cat: "三、機房與庫房成本", name: "庫房租金 20坪", a: 0, b: 80000, d: 480000, note: "庫房抓 $4萬/坪" },
+        { cat: "三、機房與庫房成本", name: "庫房水電費 5000/月", a: 0, b: 10000, d: 60000, note: "" },
+        { cat: "三、機房與庫房成本", name: "庫房管理費 $150/坪", a: 0, b: 6000, d: 36000, note: "" }
+    ];
+
+    function formatNumber(num) {
+        if (isNaN(num)) return "0";
+        let isNeg = num < 0;
+        let absNum = Math.abs(Math.round(num));
+        let formatted = absNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return isNeg ? `(${formatted})` : formatted;
+    }
+
+    function renderTable() {
+        const tbody = document.getElementById("tableBody");
+        tbody.innerHTML = "";
+
+        let html = "";
+        html += renderGroup("一、固定常態成本", dataRows.slice(0, 16), "subA");
+        html += renderGroup("二、搬遷一次性成本", dataRows.slice(16, 22), "subB");
+        html += renderGroup("三、機房與庫房成本", dataRows.slice(22, 30), "subC");
+
+        html += `
+            <tr class="grand-total-row">
+                <td></td>
+                <td>(A)+(B)+(C)</td>
+                <td class="text-right" id="tot_a">0</td>
+                <td class="text-right" id="tot_b">0</td>
+                <td class="text-right" id="tot_c">0</td>
+                <td class="text-right" id="tot_d">0</td>
+                <td class="text-right" id="tot_diff">0</td>
+                <td></td>
+            </tr>
+        `;
+
+        tbody.innerHTML = html;
+        recalculate();
+    }
+
+    function renderGroup(catName, rows, subId) {
+        let groupHtml = "";
+        rows.forEach((row, idx) => {
+            let globalIdx = dataRows.indexOf(row);
+            groupHtml += `<tr>`;
+            if (idx === 0) {
+                groupHtml += `<td rowspan="${rows.length + 1}" class="bold" style="background-color: #F9F9F9; vertical-align: middle; text-align: center;">${catName}</td>`;
+            }
+            groupHtml += `
+                <td>${row.name}</td>
+                <td class="text-right" id="row_a_${globalIdx}">${formatNumber(row.a)}</td>
+                <td class="text-right"><input type="number" class="editable-num" data-idx="${globalIdx}" data-field="b" value="${row.b}"></td>
+                <td class="text-right" id="row_c_${globalIdx}">0</td>
+                <td class="text-right"><input type="number" class="editable-num" data-idx="${globalIdx}" data-field="d" value="${row.d}"></td>
+                <td class="text-right" id="row_diff_${globalIdx}">0</td>
+                <td>${row.note}</td>
+            `;
+            groupHtml += `</tr>`;
+        });
+
+        groupHtml += `
+            <tr class="subtotal-row">
+                <td>小計 (${catName.charAt(0)})</td>
+                <td class="text-right" id="${subId}_a">0</td>
+                <td class="text-right" id="${subId}_b">0</td>
+                <td class="text-right" id="${subId}_c">0</td>
+                <td class="text-right" id="${subId}_d">0</td>
+                <td class="text-right" id="${subId}_diff">0</td>
+                <td></td>
+            </tr>
+        `;
+        return groupHtml;
+    }
+
+    function recalculate() {
+        const inputs = document.querySelectorAll(".editable-num");
+        inputs.forEach(input => {
+            let idx = parseInt(input.dataset.idx);
+            let field = input.dataset.field;
+            let val = parseFloat(input.value) || 0;
+            dataRows[idx][field] = val;
+        });
+
+        let subA_a = 0, subA_b = 0, subA_c = 0, subA_d = 0, subA_diff = 0;
+        let subB_a = 0, subB_b = 0, subB_c = 0, subB_d = 0, subB_diff = 0;
+        let subC_a = 0, subC_b = 0, subC_c = 0, subC_d = 0, subC_diff = 0;
+
+        dataRows.forEach((row, idx) => {
+            row.c = row.a + row.b;
+            row.diff = row.d - row.c;
+
+            document.getElementById(`row_c_${idx}`).innerText = formatNumber(row.c);
+            let diffEl = document.getElementById(`row_diff_${idx}`);
+            diffEl.innerText = formatNumber(row.diff);
+            if (row.diff < 0) {
+                diffEl.className = "text-right red-text";
+            } else {
+                diffEl.className = "text-right";
+            }
+
+            if (idx < 16) {
+                subA_a += row.a; subA_b += row.b; subA_c += row.c; subA_d += row.d; subA_diff += row.diff;
+            } else if (idx < 22) {
+                subB_a += row.a; subB_b += row.b; subB_c += row.c; subB_d += row.d; subB_diff += row.diff;
+            } else {
+                subC_a += row.a; subC_b += row.b; subC_c += row.c; subC_d += row.d; subC_diff += row.diff;
+            }
+        });
+
+        setSubtotalUI("subA", subA_a, subA_b, subA_c, subA_d, subA_diff);
+        setSubtotalUI("subB", subB_a, subB_b, subB_c, subB_d, subB_diff);
+        setSubtotalUI("subC", subC_a, subC_b, subC_c, subC_d, subC_diff);
+
+        let tot_a = subA_a + subB_a + subC_a;
+        let tot_b = subA_b + subB_b + subC_b;
+        let tot_c = subA_c + subB_c + subC_c;
+        let tot_d = subA_d + subB_d + subC_d;
+        let tot_diff = tot_d - tot_c;
+
+        document.getElementById("tot_a").innerText = formatNumber(tot_a);
+        document.getElementById("tot_b").innerText = formatNumber(tot_b);
+        document.getElementById("tot_c").innerText = formatNumber(tot_c);
+        document.getElementById("tot_d").innerText = formatNumber(tot_d);
+        let totDiffEl = document.getElementById("tot_diff");
+        totDiffEl.innerText = formatNumber(tot_diff);
+        totDiffEl.className = tot_diff < 0 ? "text-right red-text bold" : "text-right bold";
+
+        document.getElementById("sumA+sumB+sumC_display").innerText = formatNumber(tot_b);
+
+        let yrRest = tot_d - tot_a;
+
+        setSummaryRow("diff_yr1", yrRest);
+        setSummaryRow("diff_yr2", yrRest);
+        setSummaryRow("diff_yr3", yrRest);
+        setSummaryRow("diff_yr4", yrRest);
+        setSummaryRow("diff_yr5", yrRest);
+
+        let totalFiveYears = yrRest * 5;
+        setSummaryRow("diff_total", totalFiveYears);
+
+        let addBack = 2283564 * 5;
+        let addBackEl = document.getElementById("add_back_amort");
+        addBackEl.innerText = formatNumber(addBack);
+
+        let finalTotal = totalFiveYears + addBack;
+        let finalEl = document.getElementById("final_total");
+        finalEl.innerText = formatNumber(finalTotal);
+        finalEl.className = finalTotal < 0 ? "text-right bold red-text" : "text-right bold";
+
+        let perYearAdded = finalTotal / 5;
+        let perYearEl = document.getElementById("per_year_added");
+        perYearEl.innerText = formatNumber(perYearAdded);
+        perYearEl.className = perYearAdded < 0 ? "text-right bold red-text" : "text-right bold";
+    }
+
+    function setSubtotalUI(id, a, b, c, d, diff) {
+        document.getElementById(`${id}_a`).innerText = formatNumber(a);
+        document.getElementById(`${id}_b`).innerText = formatNumber(b);
+        document.getElementById(`${id}_c`).innerText = formatNumber(c);
+        document.getElementById(`${id}_d`).innerText = formatNumber(d);
+        let diffEl = document.getElementById(`${id}_diff`);
+        diffEl.innerText = formatNumber(diff);
+        diffEl.className = diff < 0 ? "text-right red-text" : "text-right";
+    }
+
+    function setSummaryRow(elementId, val) {
+        let el = document.getElementById(elementId);
+        el.innerText = formatNumber(val);
+        el.className = val < 0 ? "text-right bold red-text" : "text-right bold";
+    }
+
+    window.onload = function() {
+        renderTable();
+        document.getElementById("tableBody").addEventListener("input", function(e) {
+            if (e.target.classList.contains("editable-num")) {
+                recalculate();
+            }
+        });
+    };
+</script>
+
+</body>
+</html>
